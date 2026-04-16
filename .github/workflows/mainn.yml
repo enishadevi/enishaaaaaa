@@ -1,0 +1,23 @@
+name: CI with Secrets
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use the API Key
+        env:
+          # This maps the GitHub Secret to an Environment Variable
+          MY_API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          echo "The workflow is now using the secret."
+          # You can now use $MY_API_KEY in your scripts/commands
+          # Note: GitHub automatically masks secrets in logs
