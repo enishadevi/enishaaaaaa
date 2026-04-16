@@ -5,7 +5,7 @@ steps:
       - name: Use Database Password
         env:
           # Map your GitHub Secret to an Environment Variable
-          DB_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           MY_API_KEY: ${{ secrets.API_KEY }}
         run: |
           echo "Connecting to the database..."
