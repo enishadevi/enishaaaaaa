@@ -1,1 +1,29 @@
+name: Authenticate Service
 
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  auth-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Example 1: Passing a secret to a CLI or Script via Environment Variables
+      - name: Authenticate with API
+        env:
+          API_TOKEN: ${{ secrets.SERVICE_API_KEY }}
+        run: |
+          echo "Authenticating..."
+          # The variable $API_TOKEN is now available to your commands
+          curl -H "Authorization: Bearer $API_TOKEN" https://api.example.com/data
+
+      # Example 2: Using a dedicated Cloud Login Action (e.g., Azure or AWS)
+      - name: Cloud Provider Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
