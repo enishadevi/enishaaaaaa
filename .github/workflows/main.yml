@@ -1,0 +1,23 @@
+name: Secure Workflow Example
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # Allows you to run this manually for testing
+
+jobs:
+  secure-operations:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 1. Use a secret as an environment variable in a step
+      - name: Step 1 - Use API Key Env Var
+        env:
+          MY_API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          echo "Connecting to service using the API Key..."
+          # The secret is masked in logs as ***
+          curl -H "X-API-KEY: $MY_API_KEY" https://api.example.com/v1/ping
