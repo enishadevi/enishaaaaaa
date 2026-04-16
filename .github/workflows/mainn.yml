@@ -21,4 +21,3 @@ jobs:
           echo "The workflow is now using the secret."
           # You can now use $MY_API_KEY in your scripts/commands
           # Note: GitHub automatically masks secrets in logs
-           
