@@ -1,0 +1,13 @@
+steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Database Password
+        env:
+          # Map your GitHub Secret to an Environment Variable
+          DB_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          MY_API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          echo "Connecting to the database..."
+          # Use the variable in your command or script
+          # Example: python script.py --password $DB_PASSWORD
