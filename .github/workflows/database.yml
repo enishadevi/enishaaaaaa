@@ -1,4 +1,14 @@
-steps:
+name: database
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # Allows you to run this manually for testing
+
+jobs:
+  secure-operations:
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
