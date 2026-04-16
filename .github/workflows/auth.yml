@@ -1,4 +1,4 @@
-name: Authenticate Service
+name: Deployment Status
 
 on:
   push:
@@ -6,24 +6,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  auth-job:
+  notify:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      # Example 1: Passing a secret to a CLI or Script via Environment Variables
-      - name: Authenticate with API
+      - name: Send Status Update
         env:
-          API_TOKEN: ${{ secrets.SERVICE_API_KEY }}
+          # Mapping your stored secret to an env var
+          TARGET_URL: ${{ secrets.WEBHOOK_URL }}
         run: |
-          echo "Authenticating..."
-          # The variable $API_TOKEN is now available to your commands
-          curl -H "Authorization: Bearer $API_TOKEN" https://api.example.com/data
-
-      # Example 2: Using a dedicated Cloud Login Action (e.g., Azure or AWS)
-      - name: Cloud Provider Login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          echo "Sending notification to endpoint..."
+          
+          # This sends a JSON package to your URL
+          # If the URL is valid, this will return a 200 OK
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"Workflow enishaaaaaa completed successfully!"}' \
+          $TARGET_URL
